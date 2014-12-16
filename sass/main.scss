@@ -1,0 +1,40 @@
+body {
+	margin: 0;
+	padding: 0;
+
+}
+[ng-app] {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+}
+.pane {
+	position: relative;
+	
+}
+
+.animal {
+	display: block;
+	position: absolute;
+	background-repeat: no-repeat;
+	background-position: center center;
+}
+
+
+$animal-sizes: ("small": 5rem, "medium": 7rem, "large": 9rem);
+@each $size-name, $size in $animal-sizes {
+	.animal-#{$size-name} {
+		width: $size;
+		height: $size;
+	}
+}
+
+
+$animal-names: cat chicken cow dog duck elephant giraffe goat horse mouse owl penguin pig sheep zebra;
+@each $animal-name in $animal-names {
+    .animal-#{$animal-name} {
+        background-image: url("../img/#{$animal-name}.svg");
+    }
+}

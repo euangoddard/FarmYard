@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
+    <title>Farm Yard</title>
+    <link rel="stylesheet" href="css/main.css" />
+
+  </head>
+  <body>
+    <div
+      ng-app="FarmYard"
+      ng-controller="FarmYardCtrl as farm_yard_ctrl"
+      hm-swipeleft="farm_yard_ctrl.move(-1, 0)"
+      hm-swiperight="farm_yard_ctrl.move(1, 0)"
+      hm-swipeup="farm_yard_ctrl.move(0, -1)"
+      hm-swipedown="farm_yard_ctrl.move(0, 1)"
+    >
+      {{ position }}, {{ animal }}
+    </div>
+
+    <script src="js/lib/angular.min.js"></script>
+    <script src="js/lib/hammer.js"></script>
+    <script src="js/lib/angular.hammer.min.js"></script>
+    <script src="js/lib/lodash.js"></script>
+    <script src="js/farmyard.js"></script>
+  </body>
+</html>
