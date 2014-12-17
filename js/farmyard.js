@@ -1,6 +1,24 @@
 (function (angular, _) {
 	'usr strict';
 
+	var ANIMALS = [
+		'cat',
+		'chicken',
+		'cow',
+		'dog',
+		'duck',
+		'elephant',
+		'giraffe',
+		'goat',
+		'horse',
+		'mouse',
+		'owl',
+		'penguin',
+		'pig',
+		'sheep',
+		'zebra'
+	];
+
 	var app = angular.module('FarmYard', ['hmTouchEvents']);
 
 	app.controller('FarmYardCtrl', function ($scope) {
@@ -26,46 +44,23 @@
 		this.move(0, 0);		
 	});
 
-	var ANIMALS = [
-		'cat',
-		'chicken',
-		'cow',
-		'dog',
-		'duck',
-		'elephant',
-		'giraffe',
-		'goat',
-		'horse',
-		'mouse',
-		'owl',
-		'penguin',
-		'pig',
-		'sheep',
-		'zebra'
-	];
+	app.directive('animal', function () {
+		return {
+			restrict: 'E',
+			scope: {
+				name: '='
+			},
+			templateUrl: '../partials/animal.html',
+			controller: function ($scope) {
+				$scope.is_speaking = false;
+				this.speak = function () {
+					$scope.is_speaking = true;
+				};
 
+			},
+			controllerAs: 'animal_ctrl'
+		}
+	});
+
+	
 }(window.angular, window._));
-
-
-/*define(['hammer', 'scene', 'domReady!'], function (Hammer, scene) {
-	'use strict';
-
-	var make_scene_mover = function (dx, dy) {
-		return function move_scene () {
-			var animal = scene.move(dx, dy);
-			console.log(animal);
-		};
-	};
-
-	var ui_scene = document.querySelector('#scene');
-	var hammer = new Hammer(ui_scene);
-
-	hammer.get('swipe').set({ direction: Hammer.DIRECTION_ALL });
-	hammer.on('swipeleft', make_scene_mover(1, 0));
-	hammer.on('swiperight', make_scene_mover(-1, 0));
-	hammer.on('swipeup', make_scene_mover(0, 1));
-	hammer.on('swipedown', make_scene_mover(0, -1));
-
-	console.log(scene.init());
-
-});*/

@@ -1,3 +1,5 @@
+@import "utils";
+
 body {
 	margin: 0;
 	padding: 0;
@@ -9,27 +11,35 @@ body {
 	left: 0;
 	right: 0;
 	bottom: 0;
+	overflow: hidden;
 }
-.pane {
-	position: relative;
-	
+
+.section {
+	float: left;
+	width: 50%;
 }
 
 .animal {
 	display: block;
-	position: absolute;
 	background-repeat: no-repeat;
 	background-position: center center;
+	width: 45vw;
+	height: 45vw;
+	margin: 0 auto;
 }
 
+@include media-orientation-query(portrait) {
+	.section {
+		float: none;
+		width: 100%;
+	}
 
-$animal-sizes: ("small": 5rem, "medium": 7rem, "large": 9rem);
-@each $size-name, $size in $animal-sizes {
-	.animal-#{$size-name} {
-		width: $size;
-		height: $size;
+	.animal {
+		height: 45vw;
+		width: 90vw;
 	}
 }
+
 
 
 $animal-names: cat chicken cow dog duck elephant giraffe goat horse mouse owl penguin pig sheep zebra;

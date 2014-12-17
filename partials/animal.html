@@ -1,0 +1,11 @@
+<section class="section">
+    <div
+        class="animal animal-{{ name }}"
+        hm-tap="animal_ctrl.speak()"
+    ></div>
+</section>
+<section class="section">
+    <div ng-show="is_speaking">
+        {{ name }} says hello
+    </div>
+</section>
