@@ -5,7 +5,7 @@
     ></div>
 </section>
 <section class="section">
-    <div ng-show="is_speaking">
-        {{ name }} says hello
+    <div class="sound" ng-class="{'sound-hidden': !is_speaking}">
+        {{ sound }}
     </div>
 </section>

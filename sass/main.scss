@@ -24,8 +24,8 @@ body {
 	background-repeat: no-repeat;
 	background-position: center center;
 	width: 45vw;
-	height: 45vw;
-	margin: 0 auto;
+	height: 90vh;
+	margin: 5vh auto 0;
 }
 
 @include media-orientation-query(portrait) {
@@ -35,7 +35,7 @@ body {
 	}
 
 	.animal {
-		height: 45vw;
+		height: 45vh;
 		width: 90vw;
 	}
 }
@@ -47,4 +47,48 @@ $animal-names: cat chicken cow dog duck elephant giraffe goat horse mouse owl pe
     .animal-#{$animal-name} {
         background-image: url("../img/#{$animal-name}.svg");
     }
+}
+
+
+@include keyframes(sound-shake) {
+	0% {
+		@include transform(rotateZ(-10deg));
+	}
+
+	50% {
+		@include transform(rotateZ(10deg) scale(1.5));
+	}
+
+	100% {
+		@include transform(rotateZ(-10deg));
+	}	
+}
+
+.sound {
+	@include transition(opacity, 0.5s, ease-in-out);
+
+	opacity: 1;
+	font-family: 'Shojumaru', cursive;
+	font-size: 10vw;
+	text-align: center;
+	line-height: 100vh;
+	height: 100vh;
+
+	@include transform-origin(50%);
+	@include animation(sound-shake, 1.0s, forwards infinite);
+
+	&.sound-hidden {
+		opacity: 0;
+	}
+}
+
+@include media-orientation-query(portrait) {
+	.sound {
+		height: 45vh;
+		line-height: 45vh;
+		margin-top: 5vh;
+		width: 100%;
+		font-size: 10vh;
+	}
+
 }

@@ -19,6 +19,24 @@
 		'zebra'
 	];
 
+	var SOUNDS_BY_ANIMAL = {
+		'cat': 'Meow',
+		'chicken': 'Cluck',
+		'cow': 'Moo',
+		'dog': 'Woof',
+		'duck': 'Quack',
+		'elephant': 'Trump',
+		'giraffe': '???',
+		'goat': 'Bleat',
+		'horse': 'Neigh',
+		'mouse': 'Squeak',
+		'owl': 'Twit-twoo',
+		'penguin': '???',
+		'pig': 'Oink',
+		'sheep': 'Baa',
+		'zebra': '???'
+	};
+
 	var app = angular.module('FarmYard', ['hmTouchEvents']);
 
 	app.controller('FarmYardCtrl', function ($scope) {
@@ -51,10 +69,21 @@
 				name: '='
 			},
 			templateUrl: '../partials/animal.html',
-			controller: function ($scope) {
+			controller: function ($scope, $timeout) {
+				var timeout_promise;
 				$scope.is_speaking = false;
+
+				$scope.$watch('name', function (animal_name) {
+					$scope.is_speaking = false;
+					$scope.sound = SOUNDS_BY_ANIMAL[animal_name];
+				});
+
 				this.speak = function () {
 					$scope.is_speaking = true;
+					// TODO: Replace this with listening for the end of the sound
+					timeout_promise = $timeout(function () {
+						$scope.is_speaking = false;
+					}, 10000);
 				};
 
 			},
