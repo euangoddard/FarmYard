@@ -37,7 +37,7 @@
 		'zebra': '???'
 	};
 
-	var app = angular.module('FarmYard', ['hmTouchEvents']);
+	var app = angular.module('FarmYard', ['ngAnimate', 'hmTouchEvents']);
 
 	app.controller('FarmYardCtrl', function ($scope) {
 		var SCENE_CACHE = {};
@@ -83,7 +83,7 @@
 					// TODO: Replace this with listening for the end of the sound
 					timeout_promise = $timeout(function () {
 						$scope.is_speaking = false;
-					}, 10000);
+					}, 1000);
 				};
 
 			},

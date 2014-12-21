@@ -41,7 +41,6 @@ body {
 }
 
 
-
 $animal-names: cat chicken cow dog duck elephant giraffe goat horse mouse owl penguin pig sheep zebra;
 @each $animal-name in $animal-names {
     .animal-#{$animal-name} {
@@ -65,9 +64,6 @@ $animal-names: cat chicken cow dog duck elephant giraffe goat horse mouse owl pe
 }
 
 .sound {
-	@include transition(opacity, 0.5s, ease-in-out);
-
-	opacity: 1;
 	font-family: 'Shojumaru', cursive;
 	font-size: 10vw;
 	text-align: center;
@@ -77,8 +73,13 @@ $animal-names: cat chicken cow dog duck elephant giraffe goat horse mouse owl pe
 	@include transform-origin(50%);
 	@include animation(sound-shake, 1.0s, forwards infinite);
 
-	&.sound-hidden {
-		opacity: 0;
+	&.ng-hide-add.ng-hide-add-active,
+	&.ng-hide-remove.ng-hide-remove-active {
+		@include transition(opacity, 0.5s, ease-in-out);
+	}
+
+	&.ng-hide {
+	  opacity: 0;
 	}
 }
 
