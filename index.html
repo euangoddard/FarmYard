@@ -17,7 +17,12 @@
       hm-swipeup="farm_yard_ctrl.move(0, -1)"
       hm-swipedown="farm_yard_ctrl.move(0, 1)"
     >
-      <animal name="animal"></animal>
+      <article
+        animal="animal"
+        ng-repeat="animal in animals"
+        ng-animate
+        class="explode"
+      ></article>
     </div>
 
     <script src="js/lib/angular.min.js"></script>

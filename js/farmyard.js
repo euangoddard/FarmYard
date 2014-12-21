@@ -43,6 +43,7 @@
 		var SCENE_CACHE = {};
 
 		$scope.position = {x: 0, y: 0};
+		$scope.animals = [];
 
 		this.move = function (dx, dy) {
 			$scope.position.x += dx;
@@ -52,7 +53,7 @@
 			if (typeof animal === 'undefined') {
 				SCENE_CACHE[cache_key] = animal = _.sample(ANIMALS);
 			}
-			$scope.animal = animal;
+			$scope.animals.splice(0, 1, animal);
 		};
 
 		var get_cache_key = function (x, y) {
@@ -64,19 +65,14 @@
 
 	app.directive('animal', function () {
 		return {
-			restrict: 'E',
+			restrict: 'EA',
 			scope: {
-				name: '='
+				name: '=animal'
 			},
 			templateUrl: '../partials/animal.html',
 			controller: function ($scope, $timeout) {
 				var timeout_promise;
 				$scope.is_speaking = false;
-
-				$scope.$watch('name', function (animal_name) {
-					$scope.is_speaking = false;
-					$scope.sound = SOUNDS_BY_ANIMAL[animal_name];
-				});
 
 				this.speak = function () {
 					$scope.is_speaking = true;
@@ -85,6 +81,10 @@
 						$scope.is_speaking = false;
 					}, 1000);
 				};
+				$scope.$watch('name', function (name) {
+					$scope.is_speaking = false;
+					$scope.sound = SOUNDS_BY_ANIMAL[name];
+				});
 
 			},
 			controllerAs: 'animal_ctrl'

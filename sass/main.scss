@@ -19,6 +19,32 @@ body {
 	width: 50%;
 }
 
+.explode {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+
+	@include transition(transform, 0.5s, ease-in-out);
+	
+	&.ng-leave.ng-leave-active,
+	&.ng-enter {
+		@include transform(scale(0.1));
+	}
+
+	&.ng-leave,
+	&.ng-enter.ng-enter-active {
+		@include transform(scale(1));
+	}
+
+	z-index: 2;
+
+	& + & {
+		z-index: 1;
+	}
+}
+
 .animal {
 	display: block;
 	background-repeat: no-repeat;
@@ -26,6 +52,7 @@ body {
 	width: 45vw;
 	height: 90vh;
 	margin: 5vh auto 0;
+
 }
 
 @include media-orientation-query(portrait) {
@@ -45,6 +72,7 @@ $animal-names: cat chicken cow dog duck elephant giraffe goat horse mouse owl pe
 @each $animal-name in $animal-names {
     .animal-#{$animal-name} {
         background-image: url("../img/#{$animal-name}.svg");
+
     }
 }
 

@@ -2,11 +2,10 @@
     <div
         class="animal animal-{{ name }}"
         hm-tap="animal_ctrl.speak()"
-        ng-class="name"
     ></div>
 </section>
 <section class="section">
-    <div class="sound" ng-show="is_speaking" ng-animate>
+    <aside class="sound" ng-show="is_speaking" ng-animate>
         {{ sound }}
-    </div>
+    </aside>
 </section>
