@@ -27,6 +27,7 @@ body {
 	bottom: 0;
 
 	@include transition(transform, 0.5s, ease-in-out);
+	@include transform-origin(25% 50%);
 	
 	&.ng-leave.ng-leave-active,
 	&.ng-enter {
@@ -45,10 +46,17 @@ body {
 	}
 }
 
+@include media-orientation-query(portrait) {
+	.explode {
+		@include transform-origin(50%);
+	}
+}
+
 .animal {
 	display: block;
 	background-repeat: no-repeat;
 	background-position: center center;
+	background-size: contain;
 	width: 45vw;
 	height: 90vh;
 	margin: 5vh auto 0;
@@ -68,7 +76,7 @@ body {
 }
 
 
-$animal-names: cat chicken cow dog duck elephant giraffe goat horse mouse owl penguin pig sheep zebra;
+$animal-names: cat chicken cockerel cow dog donkey elephant fox leopard lion lioness monkey orangutan owl panda penguin pig puma rabbit reindeer sheep tiger zebra;
 @each $animal-name in $animal-names {
     .animal-#{$animal-name} {
         background-image: url("../img/#{$animal-name}.svg");
@@ -93,7 +101,7 @@ $animal-names: cat chicken cow dog duck elephant giraffe goat horse mouse owl pe
 
 .sound {
 	font-family: 'Shojumaru', cursive;
-	font-size: 10vw;
+	font-size: 8vw;
 	text-align: center;
 	line-height: 100vh;
 	height: 100vh;
@@ -117,7 +125,7 @@ $animal-names: cat chicken cow dog duck elephant giraffe goat horse mouse owl pe
 		line-height: 45vh;
 		margin-top: 5vh;
 		width: 100%;
-		font-size: 10vh;
+		font-size: 8vh;
 	}
 
 }
