@@ -55,6 +55,13 @@
 		'zebra': '???'
 	};
 
+	var DELTAS_BY_KEYCODE = {
+		37: [-1, 0], // left
+		38: [0, -1], // up
+		39: [1, 0], // right
+		40: [0, 1] // down
+	};
+
 	var app = angular.module('FarmYard', ['ngAnimate', 'hmTouchEvents']);
 
 	app.controller('FarmYardCtrl', function ($scope) {
@@ -78,7 +85,22 @@
 			return [x.toString(), y.toString()].join(',');
 		};
 
-		this.move(0, 0);		
+		var ctrl = this;
+		var doc_element = angular.element(document);
+		doc_element.on('keydown', function (event) {
+			var delta = DELTAS_BY_KEYCODE[event.keyCode];
+			if (delta) {
+				$scope.$apply(function () {
+					ctrl.move.apply(ctrl, delta);
+				});
+			};
+
+		});
+		$scope.$on('$destroy', function () {
+			doc_element.off('keydown');
+		});
+
+		this.move(0, 0);
 	});
 
 	app.directive('animal', function () {
