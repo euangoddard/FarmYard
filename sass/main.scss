@@ -76,7 +76,7 @@ body {
 }
 
 
-$animal-names: cat chicken cockerel cow dog donkey elephant fox leopard lion lioness monkey orangutan owl panda penguin pig puma rabbit reindeer sheep tiger zebra;
+$animal-names: cat chicken cockerel cow dog donkey elephant fox horse leopard lion lioness monkey orangutan owl panda penguin pig puma rabbit reindeer sheep tiger zebra;
 @each $animal-name in $animal-names {
     .animal-#{$animal-name} {
         background-image: url("../img/#{$animal-name}.svg");
