@@ -110,12 +110,13 @@
 				name: '=animal'
 			},
 			templateUrl: '../partials/animal.html',
-			controller: function ($scope, $timeout) {
+			controller: function ($scope, $timeout, vibration) {
 				var timeout_promise;
 				$scope.is_speaking = false;
 
 				this.speak = function () {
 					$scope.is_speaking = true;
+					vibration.vibrate(200);
 					// TODO: Replace this with listening for the end of the sound
 					timeout_promise = $timeout(function () {
 						$scope.is_speaking = false;
@@ -129,6 +130,26 @@
 			},
 			controllerAs: 'animal_ctrl'
 		}
+	});
+
+	app.factory('vibration', function () {
+		var is_vibration_capable = angular.isFunction(navigator.vibrate);
+
+		if (!is_vibration_capable) {
+			return {
+				vibrate: angular.noop,
+				stop: angular.noop
+			}
+		}
+
+		return {
+			vibrate: function () {
+				return navigator.vibrate(Array.prototype.slice.call(arguments, 0));
+			},
+			stop: function () {
+				return navigator.vibrate(0);
+			}
+		};
 	});
 
 	
