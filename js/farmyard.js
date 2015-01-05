@@ -43,16 +43,16 @@
 		'lioness': 'Roar',
 		'monkey': 'Screech',
 		'orangutan': 'Ooo-ooh',
-		'owl': 'Twittwoo',
+		'owl': 'Hoot',
 		'panda': 'Growl',
-		'penguin': '???',
+		'penguin': 'Squawk',
 		'pig': 'Oink',
 		'puma': 'Growl',
-		'rabbit': 'Snuffle',
+		'rabbit': 'Sqeuak',
 		'reindeer': 'Awww',
 		'sheep': 'Baaa',
-		'tiger': 'Roar',
-		'zebra': '???'
+		'tiger': 'Growl',
+		'zebra': 'Whinny'
 	};
 
 	var DELTAS_BY_KEYCODE = {
