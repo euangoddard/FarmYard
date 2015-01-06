@@ -63,22 +63,7 @@
 	};
 
 	var app = angular.module('FarmYard', ['ngAnimate', 'hmTouchEvents']).config(function (SoundManagerProvider) {
-		SoundManagerProvider.set_sounds_root('/sounds/').add_sounds(
-			'cat',
-			'cockerel',
-			'cow',
-			'dog',
-			'elephant',
-			'goat',
-			'horse',
-			'lioness',
-			'lion',
-			'monkey',
-			'owl',
-			'puma',
-			'sheep',
-			'tiger'
-		);
+		SoundManagerProvider.set_sounds_root('/sounds/').add_sounds(ANIMALS);
 	});
 
 	app.controller('FarmYardCtrl', function ($scope) {
@@ -185,9 +170,9 @@
 			return this;
 		};
 
-		this.add_sounds = function () {
+		this.add_sounds = function (sounds) {
 			var self = this;
-			angular.forEach(arguments, function (sound) {
+			angular.forEach(sounds, function (sound) {
 				pending_sounds += 1;
 				load_sound(sound);
 			});
