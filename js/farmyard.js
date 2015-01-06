@@ -62,7 +62,24 @@
 		40: [0, 1] // down
 	};
 
-	var app = angular.module('FarmYard', ['ngAnimate', 'hmTouchEvents']);
+	var app = angular.module('FarmYard', ['ngAnimate', 'hmTouchEvents']).config(function (SoundManagerProvider) {
+		SoundManagerProvider.set_sounds_root('/sounds/').add_sounds(
+			'cat',
+			'cockerel',
+			'cow',
+			'dog',
+			'elephant',
+			'goat',
+			'horse',
+			'lioness',
+			'lion',
+			'monkey',
+			'owl',
+			'puma',
+			'sheep',
+			'tiger'
+		);
+	});
 
 	app.controller('FarmYardCtrl', function ($scope) {
 		var SCENE_CACHE = {};
@@ -110,17 +127,16 @@
 				name: '=animal'
 			},
 			templateUrl: '../partials/animal.html',
-			controller: function ($scope, $timeout, vibration) {
+			controller: function ($scope, vibration, SoundManager) {
 				var timeout_promise;
 				$scope.is_speaking = false;
 
 				this.speak = function () {
 					$scope.is_speaking = true;
 					vibration.vibrate(200);
-					// TODO: Replace this with listening for the end of the sound
-					timeout_promise = $timeout(function () {
+					SoundManager.play($scope.name).then(function () {
 						$scope.is_speaking = false;
-					}, 1000);
+					});
 				};
 				$scope.$watch('name', function (name) {
 					$scope.is_speaking = false;
@@ -150,6 +166,72 @@
 				return navigator.vibrate(0);
 			}
 		};
+	});
+
+	app.provider('SoundManager', function () {
+
+		var sounds = {};
+		var pending_sounds = 0;
+
+		var sounds_root = '/';
+
+		var extension = Modernizr.audio.ogg ? 'ogg' : 'm4a';
+
+		window.AudioContext = window.AudioContext || window.webkitAudioContext;
+		var context = new AudioContext();
+
+		this.set_sounds_root = function (root) {
+			sounds_root = root;
+			return this;
+		};
+
+		this.add_sounds = function () {
+			var self = this;
+			angular.forEach(arguments, function (sound) {
+				pending_sounds += 1;
+				load_sound(sound);
+			});
+			return this;
+		};
+
+		var get_sound_file_name = function (sound) {
+			return sounds_root + sound + '.' + extension;
+		};
+
+		var load_sound = function (sound) {
+			var url = get_sound_file_name(sound);
+			
+			var request = new XMLHttpRequest();
+			request.open('GET', url, true);
+			request.responseType = 'arraybuffer';
+			request.onload = function () {
+				context.decodeAudioData(request.response, function (buffer) {
+					sounds[sound] = buffer;
+					pending_sounds -= 1;
+					if (pending_sounds === 0) {
+						console.log('all sounds loaded');
+					}
+				});
+			};
+			request.send();
+		};
+
+		this.$get = function ($q) {
+			return {
+				play: function (sound) {
+					var buffer = sounds[sound];
+					var source = context.createBufferSource();
+					source.buffer = buffer;
+					source.connect(context.destination);
+					var sound_promise = $q(function (resolve, reject) {
+						source.onended = resolve;
+					});
+					source.start(0);
+					return sound_promise;
+				}
+			};
+		}
+
 	});
 
 	
