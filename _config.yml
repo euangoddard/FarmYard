@@ -1,0 +1,7 @@
+# Site settings
+title: Menagerie
+baseurl: "/menagerie/"
+
+# Sass settings
+sass:
+    style: :compressed

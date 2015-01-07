@@ -1,14 +1,19 @@
+---
+---
 <!doctype html>
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
     <title>Menagerie</title>
     <link href="http://fonts.googleapis.com/css?family=Shojumaru" rel="stylesheet" type="text/css">
-    <link rel="stylesheet" href="css/main.css" />
+    <link rel="stylesheet" href="{{ site.baseurl }}css/main.css" />
 
   </head>
-  <body>
+  <body
+    data-sounds-root="{{ site.baseurl }}sounds/"
+    data-partials-root="{{ site.baseurl }}partials/"
+  >
     <div
       ng-app="Menagerie"
       ng-controller="MenagerieCtrl as menagerie_ctrl"
@@ -25,12 +30,12 @@
       ></article>
     </div>
 
-    <script src="js/lib/angular.min.js"></script>
-    <script src="js/lib/angular-animate.min.js"></script>
-    <script src="js/lib/hammer.js"></script>
-    <script src="js/lib/angular.hammer.min.js"></script>
-    <script src="js/lib/modernizr.audio.js"></script>
-    <script src="js/lib/lodash.js"></script>
-    <script src="js/menagerie.js"></script>
+    <script src="{{ site.baseurl }}js/lib/angular.min.js"></script>
+    <script src="{{ site.baseurl }}js/lib/angular-animate.min.js"></script>
+    <script src="{{ site.baseurl }}js/lib/hammer.js"></script>
+    <script src="{{ site.baseurl }}js/lib/angular.hammer.min.js"></script>
+    <script src="{{ site.baseurl }}js/lib/modernizr.audio.js"></script>
+    <script src="{{ site.baseurl }}js/lib/lodash.js"></script>
+    <script src="{{ site.baseurl }}js/menagerie.js"></script>
   </body>
 </html>
