@@ -1,32 +1,6 @@
 (function (angular, _) {
 	'usr strict';
 
-	var ANIMALS = [
-		'cat',
-		'chicken',
-		'cockerel',
-		'cow',
-		'dog',
-		'donkey',
-		'elephant',
-		'fox',
-		'horse',
-		'leopard',
-		'lion',
-		'lioness',
-		'monkey',
-		'orangutan',
-		'owl',
-		'panda',
-		'penguin',
-		'pig',
-		'puma',
-		'reindeer',
-		'sheep',
-		'tiger',
-		'zebra'
-	];
-
 	var SOUNDS_BY_ANIMAL = {
 		'cat': 'Meow',
 		'chicken': 'Cluck',
@@ -52,6 +26,8 @@
 		'tiger': 'Growl',
 		'zebra': 'Whinny'
 	};
+
+	var ANIMALS = _.keys(SOUNDS_BY_ANIMAL);
 
 	var DELTAS_BY_KEYCODE = {
 		37: [-1, 0], // left
