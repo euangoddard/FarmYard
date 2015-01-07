@@ -103,7 +103,7 @@ $animal-names: cat chicken cockerel cow dog donkey elephant fox horse leopard li
 }
 
 .sound {
-	font-family: 'Shojumaru', cursive;
+	font-family: "Shojumaru", cursive;
 	font-size: 8vw;
 	text-align: center;
 	line-height: 100vh;
@@ -131,4 +131,36 @@ $animal-names: cat chicken cockerel cow dog donkey elephant fox horse leopard li
 		font-size: 8vh;
 	}
 
+}
+
+$animal_colours: (
+	"cat": #6F6F6E,
+    "chicken": #B6382F,
+    "cockerel": #B6382F,
+    "cow": #68A284,
+    "dog": #723E2B,
+    "donkey": #4E7796,
+    "elephant": #AEAED3,
+    "fox": #AF5B2B,
+    "horse": #8E6451,
+    "leopard": #F39E2B,
+    "lion": #AF5B2B,
+    "lioness": #4B190D,
+    "monkey": #8E6451,
+    "orangutan": #EA8232,
+    "owl": #EA8232,
+    "panda": #3C3C3B,
+    "penguin": #2D466A,
+    "pig": #F29E9F,
+    "puma": #6F6F6E,
+    "reindeer": #F39E2B,
+    "sheep": #D3C5C1,
+    "tiger": #EA8232,
+    "zebra": #3C3C3B
+);
+
+@each $animal, $colour in $animal_colours {
+    .sound-#{$animal} {
+        color: $colour;
+    }
 }
