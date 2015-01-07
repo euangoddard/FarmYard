@@ -1,11 +1,11 @@
 <section class="section">
     <div
-        class="animal animal-{{ name }}"
+        class="animal animal-{{ ::name }}"
         hm-tap="animal_ctrl.speak()"
     ></div>
 </section>
 <section class="section">
     <aside class="sound" ng-show="is_speaking" ng-animate>
-        {{ sound }}
+        {{ ::sound }}
     </aside>
 </section>
