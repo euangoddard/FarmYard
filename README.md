@@ -1,4 +1,6 @@
-FarmYard
-========
+menagerie
+=========
 
-Farm Yard animal game for children
+Animal game for children.
+
+Made with love For Eric.
