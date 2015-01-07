@@ -62,11 +62,11 @@
 		40: [0, 1] // down
 	};
 
-	var app = angular.module('FarmYard', ['ngAnimate', 'hmTouchEvents']).config(function (SoundManagerProvider) {
+	var app = angular.module('Menagerie', ['ngAnimate', 'hmTouchEvents']).config(function (SoundManagerProvider) {
 		SoundManagerProvider.set_sounds_root('/sounds/').add_sounds(ANIMALS);
 	});
 
-	app.controller('FarmYardCtrl', function ($scope) {
+	app.controller('MenagerieCtrl', function ($scope) {
 		var SCENE_CACHE = {};
 
 		$scope.position = {x: 0, y: 0};
