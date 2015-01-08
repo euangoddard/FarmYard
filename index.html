@@ -22,6 +22,7 @@
       hm-swipeup="menagerie_ctrl.move(0, -1)"
       hm-swipedown="menagerie_ctrl.move(0, 1)"
     >
+      <h1 ng-hide="animals">Please wait</h1>
       <article
         animal="animal"
         ng-repeat="animal in animals"
