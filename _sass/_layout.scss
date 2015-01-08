@@ -1,0 +1,74 @@
+@import "utils";
+
+body {
+    margin: 0;
+    padding: 0;
+
+}
+[ng-app] {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    overflow: hidden;
+}
+
+.section {
+    float: left;
+    width: 50%;
+}
+
+.explode {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    @include transition(transform, 0.5s, ease-in-out);
+    @include transform-origin(25% 50%);
+    
+    &.ng-leave.ng-leave-active,
+    &.ng-enter {
+        @include transform(scale(0.1));
+    }
+
+    &.ng-leave,
+    &.ng-enter.ng-enter-active {
+        @include transform(scale(1));
+    }
+
+    z-index: 2;
+
+    & + & {
+        z-index: 1;
+    }
+}
+
+.animal {
+    display: block;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: contain;
+    width: 45vw;
+    height: 90vh;
+    margin: 5vh auto 0;
+
+}
+
+@include media-orientation-query(portrait) {
+    .explode {
+        @include transform-origin(50%);
+    }
+
+    .section {
+        float: none;
+        width: 100%;
+    }
+
+    .animal {
+        height: 45vh;
+        width: 90vw;
+    }
+}
