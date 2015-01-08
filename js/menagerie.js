@@ -131,7 +131,6 @@
     app.provider('SoundManager', function () {
 
         var sounds = {};
-        var pending_sounds = 0;
 
         var sounds_root = '/';
 
@@ -148,7 +147,6 @@
         this.add_sounds = function (sounds) {
             var self = this;
             angular.forEach(sounds, function (sound) {
-                pending_sounds += 1;
                 load_sound(sound);
             });
             return this;
@@ -167,10 +165,6 @@
             request.onload = function () {
                 context.decodeAudioData(request.response, function (buffer) {
                     sounds[sound] = buffer;
-                    pending_sounds -= 1;
-                    if (pending_sounds === 0) {
-                        console.log('all sounds loaded');
-                    }
                 });
             };
             request.send();
@@ -179,14 +173,19 @@
         this.$get = function ($q) {
             return {
                 play: function (sound) {
-                    var buffer = sounds[sound];
-                    var source = context.createBufferSource();
-                    source.buffer = buffer;
-                    source.connect(context.destination);
                     var sound_promise = $q(function (resolve, reject) {
+                        var buffer = sounds[sound];
+                        if (!buffer) {
+                            // If the sound is not yet ready allow for the text to display for a second
+                            setTimeout(resolve, 1000);
+                            return;
+                        }
+                        var source = context.createBufferSource();
+                        source.buffer = buffer;
+                        source.connect(context.destination);
                         source.onended = resolve;
+                        source.start(0);
                     });
-                    source.start(0);
                     return sound_promise;
                 }
             };
