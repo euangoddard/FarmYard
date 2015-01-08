@@ -53,13 +53,28 @@
             var cache_key = get_cache_key($scope.position.x, $scope.position.y);
             var animal = SCENE_CACHE[cache_key];
             if (typeof animal === 'undefined') {
-                SCENE_CACHE[cache_key] = animal = _.sample(ANIMALS);
+                var candidate_animals = get_candidate_animals(
+                    $scope.position.x,
+                    $scope.position.y
+                );
+                SCENE_CACHE[cache_key] = animal = _.sample(candidate_animals);
             }
             $scope.animals.splice(0, 1, animal);
         };
 
         var get_cache_key = function (x, y) {
             return [x.toString(), y.toString()].join(',');
+        };
+
+        var get_candidate_animals = function (x, y) {
+            var neighbouring_animals = [
+                SCENE_CACHE[get_cache_key(x - 1, y)],
+                SCENE_CACHE[get_cache_key(x + 1, y)],
+                SCENE_CACHE[get_cache_key(x, y - 1)],
+                SCENE_CACHE[get_cache_key(x, y + 1)],
+            ];
+            var candidate_animals = _.difference(ANIMALS, neighbouring_animals);
+            return candidate_animals;
         };
 
         var ctrl = this;
