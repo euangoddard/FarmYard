@@ -36,13 +36,19 @@
         40: [0, 1] // down
     };
 
-    var app = angular.module('Menagerie', ['ngAnimate', 'hmTouchEvents']).config(function (SoundManagerProvider) {
+    var app = angular.module('Menagerie', ['ngAnimate', 'hmTouchEvents']);
+    app.config(function (SoundManagerProvider, ImagePreloaderProvider) {
         var sounds_root = get_config_value('sounds-root');
         SoundManagerProvider.set_sounds_root(sounds_root);
+
+        var images_root = get_config_value('images-root');
+        ImagePreloaderProvider.set_images_root(images_root);
     });
 
-    app.controller('MenagerieCtrl', function ($scope, SoundManager) {
-        SoundManager.add_sounds(ANIMALS).then(function (data) {
+    app.controller('MenagerieCtrl', function ($scope, $q, SoundManager, ImagePreloader) {
+        var sound_loading_promise = SoundManager.add_sounds(ANIMALS)
+        var image_loading_promise = ImagePreloader.load_images(ANIMALS, 'svg');
+        $q.all([sound_loading_promise, image_loading_promise]).then(function () {
             $scope.is_loading = false;
         });
         $scope.is_loading = true;
@@ -203,12 +209,48 @@
                 },
 
                 add_sounds: function (sounds) {
-                    var self = this;
                     var sound_load_promises = [];
                     angular.forEach(sounds, function (sound) {
                         sound_load_promises.push(load_sound(sound));
                     });
                     return $q.all(sound_load_promises);
+                }
+            };
+        };
+
+    });
+
+    app.provider('ImagePreloader', function () {
+
+        var images_root = '/';
+
+        this.set_images_root = function (root) {
+            images_root = root;
+            return this;
+        };
+
+        this.$get = function ($q) {
+
+            var load_image = function (image_path, extension) {
+                var url = images_root + image_path + '.' + extension;
+
+                var image = new Image();
+                var image_load_promise = $q(function (resolve, reject) {
+                    image.onload = function () {
+                        resolve(image);
+                    };
+                });
+                image.src = url;
+                return image_load_promise;
+            };
+
+            return {
+                load_images: function (images, extension) {
+                    var image_load_promises = [];
+                    angular.forEach(images, function (image) {
+                        image_load_promises.push(load_image(image, extension));
+                    });
+                    return $q.all(image_load_promises);
                 }
             };
         };
