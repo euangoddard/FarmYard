@@ -38,10 +38,15 @@
 
     var app = angular.module('Menagerie', ['ngAnimate', 'hmTouchEvents']).config(function (SoundManagerProvider) {
         var sounds_root = get_config_value('sounds-root');
-        SoundManagerProvider.set_sounds_root(sounds_root).add_sounds(ANIMALS);
+        SoundManagerProvider.set_sounds_root(sounds_root);
     });
 
-    app.controller('MenagerieCtrl', function ($scope) {
+    app.controller('MenagerieCtrl', function ($scope, SoundManager) {
+        SoundManager.add_sounds(ANIMALS).then(function (data) {
+            $scope.is_loading = false;
+        });
+        $scope.is_loading = true;
+
         var SCENE_CACHE = {};
 
         $scope.position = {x: 0, y: 0};
@@ -85,7 +90,7 @@
                 $scope.$apply(function () {
                     ctrl.move.apply(ctrl, delta);
                 });
-            };
+            }
 
         });
         $scope.$on('$destroy', function () {
@@ -120,7 +125,7 @@
 
             },
             controllerAs: 'animal_ctrl'
-        }
+        };
     });
 
     app.factory('vibration', function () {
@@ -130,7 +135,7 @@
             return {
                 vibrate: angular.noop,
                 stop: angular.noop
-            }
+            };
         }
 
         return {
@@ -159,42 +164,35 @@
             return this;
         };
 
-        this.add_sounds = function (sounds) {
-            var self = this;
-            angular.forEach(sounds, function (sound) {
-                load_sound(sound);
-            });
-            return this;
-        };
-
         var get_sound_file_name = function (sound) {
             return sounds_root + sound + '.' + extension;
         };
 
-        var load_sound = function (sound) {
-            var url = get_sound_file_name(sound);
-            
-            var request = new XMLHttpRequest();
-            request.open('GET', url, true);
-            request.responseType = 'arraybuffer';
-            request.onload = function () {
-                context.decodeAudioData(request.response, function (buffer) {
-                    sounds[sound] = buffer;
-                });
-            };
-            request.send();
-        };
-
         this.$get = function ($q) {
+
+            var load_sound = function (sound) {
+                var url = get_sound_file_name(sound);
+                
+                var request = new XMLHttpRequest();
+                request.open('GET', url, true);
+                request.responseType = 'arraybuffer';
+
+                var sound_load_promise = $q(function (resolve, reject) {
+                    request.onload = function () {
+                        context.decodeAudioData(request.response, function (buffer) {
+                            sounds[sound] = buffer;
+                            resolve(sound);
+                        });
+                    };
+                });
+                request.send();
+                return sound_load_promise;
+            };
+
             return {
                 play: function (sound) {
                     var sound_promise = $q(function (resolve, reject) {
                         var buffer = sounds[sound];
-                        if (!buffer) {
-                            // If the sound is not yet ready allow for the text to display for a second
-                            setTimeout(resolve, 1000);
-                            return;
-                        }
                         var source = context.createBufferSource();
                         source.buffer = buffer;
                         source.connect(context.destination);
@@ -202,16 +200,25 @@
                         source.start(0);
                     });
                     return sound_promise;
+                },
+
+                add_sounds: function (sounds) {
+                    var self = this;
+                    var sound_load_promises = [];
+                    angular.forEach(sounds, function (sound) {
+                        sound_load_promises.push(load_sound(sound));
+                    });
+                    return $q.all(sound_load_promises);
                 }
             };
-        }
+        };
 
     });
 
     var get_config_value = function (param_name) {
         var value = document.body.getAttribute('data-' + param_name);
         return value;
-    }
+    };
 
     
 }(window.angular, window._));
