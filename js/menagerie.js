@@ -46,7 +46,7 @@
     });
 
     app.controller('MenagerieCtrl', function ($scope, $q, SoundManager, ImagePreloader) {
-        var sound_loading_promise = SoundManager.add_sounds(ANIMALS)
+        var sound_loading_promise = SoundManager.add_sounds(ANIMALS);
         var image_loading_promise = ImagePreloader.load_images(ANIMALS, 'svg');
         $q.all([sound_loading_promise, image_loading_promise]).then(function () {
             $scope.is_loading = false;
