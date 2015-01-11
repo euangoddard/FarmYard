@@ -1,11 +1,12 @@
 @import "utils";
 
-$progress-circular-ease-in-out : cubic-bezier(0.35, 0, 0.25, 1);
-$progress-circular-duration : 5.25s;
-$progress-circular-circle-duration : $progress-circular-duration * 0.25;
-$progress-circular-outer-duration : $progress-circular-duration * (5 / 9);
-$progress-circular-sporadic-duration : $progress-circular-duration;
-$progress-circular-size : 50px;
+$progress-circular-ease-in-out: cubic-bezier(0.35, 0, 0.25, 1);
+$progress-circular-duration: 5.25s;
+$progress-circular-circle-duration: $progress-circular-duration * 0.25;
+$progress-circular-outer-duration: $progress-circular-duration * (5 / 9);
+$progress-circular-sporadic-duration: $progress-circular-duration;
+$progress-circular-size: 100px;
+$progress-circular-colour: #B6382F;
 
 @include keyframes(outer-rotate) {
 	100% {
@@ -30,25 +31,25 @@ $progress-circular-size : 50px;
 }
 @include keyframes (sporadic-rotate) {
 	12.5% {
-        @include transform(rotate( 135deg));
+        @include transform(rotate(135deg));
     }
 	25% {
-        @include transform(rotate( 270deg));
+        @include transform(rotate(270deg));
     }
 	37.5% {
-        @include transform(rotate( 405deg));
+        @include transform(rotate(405deg));
     }
 	50% {
-        @include transform(rotate( 540deg));
+        @include transform(rotate(540deg));
     }
 	62.5% {
-        @include transform(rotate( 675deg));
+        @include transform(rotate(675deg));
     }
 	75% {
-        @include transform(rotate( 810deg));
+        @include transform(rotate(810deg));
     }
 	87.5% {
-        @include transform(rotate( 945deg));
+        @include transform(rotate(945deg));
     }
 	100% {
         @include transform(rotate(1080deg));
@@ -63,6 +64,7 @@ $progress-circular-size : 50px;
 	padding-top: 0 !important;
 	margin-bottom: 0 !important;
 	overflow: hidden;
+	
 	.inner {
 		width: $progress-circular-size;
 		height: $progress-circular-size;
@@ -73,7 +75,7 @@ $progress-circular-size : 50px;
 			right: $progress-circular-size * 0.5 - 1;
 			top: 0;
 			bottom: 0;
-			border-top: 5px solid black;
+			border-top: $progress-circular-size / 10 solid $progress-circular-colour;
 			box-sizing: border-box;
 		}
 		.left, .right {
@@ -88,9 +90,9 @@ $progress-circular-size : 50px;
 				width: $progress-circular-size;
 				height: $progress-circular-size;
 				box-sizing: border-box;
-				border-width: 5px;
+				border-width: $progress-circular-size / 10;
 				border-style: solid;
-				border-color: black black transparent;
+				border-color: $progress-circular-colour $progress-circular-colour transparent;
 				border-radius: 50%;
 			}
 		}
@@ -109,7 +111,6 @@ $progress-circular-size : 50px;
 			}
 		}
 	}
-
 
 	.spinner-wrapper {
 		@include animation(outer-rotate, $progress-circular-outer-duration, linear infinite);
