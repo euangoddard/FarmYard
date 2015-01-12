@@ -1,0 +1,44 @@
+---
+---
+
+@import "utils";
+
+html,body {
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    box-sizing: border-box;
+    
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+
+    height: 100vh;
+    width: 100vw;
+    overflow: hidden;
+
+    background: #eee;
+}
+
+@include media-orientation-query(portrait) {
+    .container {
+        flex-direction: column;
+    }
+}
+
+.item {
+    max-width: 45vw;
+    background: #ccc;
+    padding: 2em;
+    font-size: 24px;
+    font-family: sans;
+}
+
+@include media-orientation-query(portrait) {
+    .item {
+        max-height: 45vh;
+    }
+}
