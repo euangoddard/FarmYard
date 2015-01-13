@@ -47,7 +47,7 @@
       hm-swipeup="menagerie_ctrl.move(0, -1)"
       hm-swipedown="menagerie_ctrl.move(0, 1)"
     >
-      <div class="loading">
+      <div class="loading container">
         <div class="progress-circular" ng-show="is_loading">
           <div class="spinner-wrapper">
             <div class="inner">
@@ -66,7 +66,7 @@
         animal="animal"
         ng-repeat="animal in animals"
         ng-animate
-        class="explode"
+        class="container explode"
         ng-hide="is_loading"
       ></article>
     </div>

@@ -4,7 +4,7 @@
     var SOUNDS_BY_ANIMAL = {
         'cat': 'Meow',
         'chicken': 'Cluck',
-        'cockerel': 'Cockadoodle-doo',
+        'cockerel': 'Cock-a-doodle-doo',
         'cow': 'Moo',
         'dog': 'Woof',
         'donkey': 'Eee-aww',

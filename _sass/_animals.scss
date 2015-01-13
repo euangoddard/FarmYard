@@ -1,5 +1,20 @@
 @import "utils";
 
+.animal {
+    display: block;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: contain;
+    height: 90vh;
+}
+
+@include media-orientation-query(portrait) {
+    .animal {
+        width: 90vw;
+        height: 45vh;
+    }
+}
+
 
 $animal-names: cat chicken cockerel cow dog donkey elephant fox horse leopard lion lioness monkey orangutan owl panda penguin pig puma reindeer sheep tiger zebra;
 @each $animal-name in $animal-names {
@@ -10,25 +25,19 @@ $animal-names: cat chicken cockerel cow dog donkey elephant fox horse leopard li
 }
 
 @include keyframes(sound-shake) {
-    0% {
+    0%, 100% {
         @include transform(rotateZ(-10deg));
     }
 
     50% {
         @include transform(rotateZ(10deg) scale(1.5));
     }
-
-    100% {
-        @include transform(rotateZ(-10deg));
-    }   
 }
 
 .sound {
     font-family: "Shojumaru", cursive;
-    font-size: 7vw;
+    font-size: 8vw;
     text-align: center;
-    line-height: 100vh;
-    height: 100vh;
 
     @include transform-origin(50%);
     @include animation(sound-shake, 1.0s, forwards infinite);
@@ -41,17 +50,6 @@ $animal-names: cat chicken cockerel cow dog donkey elephant fox horse leopard li
     &.ng-hide {
       opacity: 0;
     }
-}
-
-@include media-orientation-query(portrait) {
-    .sound {
-        height: 45vh;
-        line-height: 45vh;
-        margin-top: 5vh;
-        width: 100%;
-        font-size: 8vh;
-    }
-
 }
 
 $animal_colours: (

@@ -3,8 +3,42 @@
 body {
     margin: 0;
     padding: 0;
-
 }
+
+.container {
+    box-sizing: border-box;
+    
+    @include flexbox;
+    @include flex-direction(row);
+    @include align-items(center);
+    @include justify-content(space-around);
+
+    height: 100vh;
+    width: 100vw;
+    overflow: hidden;
+}
+
+@include media-orientation-query(portrait) {
+    .container {
+        @include flex-direction(column);
+    }
+}
+
+.item {
+    width: 45vw;
+}
+
+@include media-orientation-query(portrait) {
+    .item {
+        @include flexbox;
+        @include flex-direction(row);
+        @include align-items(center);
+        @include justify-content(space-around);
+        width: 90vw;
+        height: 45vh;
+    }
+}
+
 [ng-app] {
     position: absolute;
     top: 0;
@@ -12,17 +46,6 @@ body {
     right: 0;
     bottom: 0;
     overflow: hidden;
-}
-
-.loading {
-    margin: 30vh auto 0;
-    width: 100px;
-}
-
-
-.section {
-    float: left;
-    width: 50%;
 }
 
 .explode {
@@ -52,29 +75,8 @@ body {
     }
 }
 
-.animal {
-    display: block;
-    background-repeat: no-repeat;
-    background-position: center center;
-    background-size: contain;
-    width: 45vw;
-    height: 90vh;
-    margin: 5vh auto 0;
-
-}
-
 @include media-orientation-query(portrait) {
     .explode {
         @include transform-origin(50%);
-    }
-
-    .section {
-        float: none;
-        width: 100%;
-    }
-
-    .animal {
-        height: 45vh;
-        width: 90vw;
     }
 }

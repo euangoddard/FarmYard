@@ -1,11 +1,9 @@
-<section class="section">
-    <div
-        class="animal animal-{{ ::name }}"
-        ng-click="animal_ctrl.speak()"
-    ></div>
-</section>
-<section class="section">
+<div
+    class="item animal animal-{{ ::name }}"
+    ng-click="animal_ctrl.speak()"
+></div>
+<div class="item">
     <aside class="sound sound-{{ ::name }}" ng-show="is_speaking" ng-animate>
         {{ ::sound }}
     </aside>
-</section>
+</div>
