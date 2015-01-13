@@ -47,8 +47,8 @@
       hm-swipeup="menagerie_ctrl.move(0, -1)"
       hm-swipedown="menagerie_ctrl.move(0, 1)"
     >
-      <div class="loading container">
-        <div class="progress-circular" ng-show="is_loading">
+      <div class="container" ng-if="is_loading">
+        <div class="progress-circular">
           <div class="spinner-wrapper">
             <div class="inner">
               <div class="gap"></div>
