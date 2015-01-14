@@ -1,0 +1,18 @@
+@import "utils";
+
+.help {
+	@include full-screen;
+
+	background-color: rgba(150, 150, 150, 0.8);
+	z-index: 3;
+	font-family: "Shojumaru", cursive;
+    font-size: 3vw;
+    text-align: center;
+    color: #B6382F;
+}
+
+@include media-orientation-query(portrait) {
+	.help {
+		font-size: 3vh;
+	}
+}
