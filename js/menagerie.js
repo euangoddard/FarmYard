@@ -71,7 +71,7 @@
                 SCENE_CACHE[cache_key] = animal = _.sample(candidate_animals);
             }
             $scope.animals.splice(0, 1, animal);
-            HelpQueue.purge('swipe');
+            HelpQueue.purge('swipe').purge('tap');
         };
 
         var get_cache_key = function (x, y) {
@@ -105,7 +105,6 @@
         });
 
         this.move(0, 0);
-
         HelpQueue.add('swipe', 15000);
         
     });
@@ -174,15 +173,18 @@
             add: function (help_id, delay) {
                 queue.push({id: help_id, delay: delay});
                 process_queue_head();
+                return this;
             },
             purge: function (help_id) {
                 var index = _.findIndex(queue, {id: help_id});
+                $rootScope.$broadcast('help:hide', help_id);
                 if (index !== -1) {
                     queue.splice(index, 1);
                 } else if (current_item_being_processed && current_item_being_processed.id === help_id) {
                     $timeout.cancel(running_timeout);
                     mark_no_current_item();
                 }
+                return this;
             }
         };
     });
@@ -196,6 +198,10 @@
 
         $scope.$on('help:show', function (event, help_id) {
             $scope.is_help_required[help_id] = true;
+        });
+
+        $scope.$on('help:hide', function (event, help_id) {
+            $scope.is_help_required[help_id] = false;
         });
     });
 
