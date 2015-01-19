@@ -45,7 +45,7 @@
         ImagePreloaderProvider.set_images_root(images_root);
     });
 
-    app.controller('MenagerieCtrl', function ($scope, $q, $timeout, SoundManager, ImagePreloader) {
+    app.controller('MenagerieCtrl', function ($scope, $q, SoundManager, ImagePreloader, HelpQueue) {
         var sound_loading_promise = SoundManager.add_sounds(ANIMALS);
         var image_loading_promise = ImagePreloader.load_images(ANIMALS, 'svg');
         $q.all([sound_loading_promise, image_loading_promise]).then(function () {
@@ -71,6 +71,7 @@
                 SCENE_CACHE[cache_key] = animal = _.sample(candidate_animals);
             }
             $scope.animals.splice(0, 1, animal);
+            HelpQueue.purge('swipe');
         };
 
         var get_cache_key = function (x, y) {
@@ -103,25 +104,10 @@
             doc_element.off('keydown');
         });
 
-
-        // Helpers
-        var tap_help_timeout = $timeout(function () {
-            $scope.is_tap_help_required = true;
-        }, 500);
-
-
         this.move(0, 0);
 
-        this.done_tap_help = function () {
-            $scope.is_tap_help_required = false;
-            $timeout(function () {
-                $scope.is_swipe_help_required = true;
-            }, 500);
-        };
-        this.done_swipe_help = function () {
-            console.log('done swipe help');
-            
-        };
+        HelpQueue.add('swipe', 15000);
+        
     });
 
     app.directive('animal', function () {
@@ -131,7 +117,7 @@
                 name: '=animal'
             },
             templateUrl: get_config_value('partials-root') + 'animal.html',
-            controller: function ($scope, vibration, SoundManager) {
+            controller: function ($scope, vibration, SoundManager, HelpQueue) {
                 var timeout_promise;
                 $scope.is_speaking = false;
 
@@ -141,15 +127,76 @@
                     SoundManager.play($scope.name).then(function () {
                         $scope.is_speaking = false;
                     });
+                    HelpQueue.purge('tap');
                 };
                 $scope.$watch('name', function (name) {
                     $scope.is_speaking = false;
                     $scope.sound = SOUNDS_BY_ANIMAL[name];
                 });
 
+                HelpQueue.add('tap', 5000);
+
             },
             controllerAs: 'animal_ctrl'
         };
+    });
+
+    app.factory('HelpQueue', function ($timeout, $rootScope) {
+        var queue = [];
+        var current_item_being_processed = null;
+        var running_timeout;
+
+        var process_queue_head = function () {
+            if (current_item_being_processed && current_item_being_processed.id) {
+                return;
+            }
+
+            var item = queue.shift();
+            
+            if (_.isUndefined(item)) {
+                return;
+            }
+
+            running_timeout = $timeout(function () {
+                $rootScope.$broadcast('help:show', item.id);
+                mark_no_current_item();
+                process_queue_head();
+            }, item.delay);
+            current_item_being_processed = item;
+        };
+
+        var mark_no_current_item = function () {
+            running_timeout = null;
+            current_item_being_processed = null;
+        };
+
+        return {
+            add: function (help_id, delay) {
+                queue.push({id: help_id, delay: delay});
+                process_queue_head();
+            },
+            purge: function (help_id) {
+                var index = _.findIndex(queue, {id: help_id});
+                if (index !== -1) {
+                    queue.splice(index, 1);
+                } else if (current_item_being_processed && current_item_being_processed.id === help_id) {
+                    $timeout.cancel(running_timeout);
+                    mark_no_current_item();
+                }
+            }
+        };
+    });
+
+    app.controller('HelpCtrl', function ($scope) {
+        $scope.is_help_required = {};
+
+        this.end_help = function (help_id) {
+            $scope.is_help_required[help_id] = false;
+        };
+
+        $scope.$on('help:show', function (event, help_id) {
+            $scope.is_help_required[help_id] = true;
+        });
     });
 
     app.directive('onAnimationEnd', function () {
@@ -165,7 +212,7 @@
                     });
                 });
             }
-        }
+        };
     });
 
     app.factory('vibration', function () {
@@ -295,6 +342,5 @@
         var value = document.body.getAttribute('data-' + param_name);
         return value;
     };
-
     
 }(window.angular, window._));

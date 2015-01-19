@@ -69,16 +69,18 @@
         class="container explode"
         ng-hide="is_loading"
       ></article>
-      <div
-          class="help help-tap"
-          ng-if="is_tap_help_required"
-          on-animation-end="menagerie_ctrl.done_tap_help()"
-      ></div>
-      <div
-          class="help help-swipe"
-          ng-if="is_swipe_help_required"
-          on-animation-end="menagerie_ctrl.done_swipe_help()"
-      ></div>
+      <aside ng-controller="HelpCtrl as help_ctrl" ng-cloak>
+        <div
+            class="help help-tap"
+            ng-if="is_help_required.tap"
+            on-animation-end="help_ctrl.end_help('tap')"
+        ></div>
+        <div
+            class="help help-swipe"
+            ng-if="is_help_required.swipe"
+            on-animation-end="help_ctrl.end_help('swipe')"
+        ></div>
+      </aside>
     </div>
 
     <script src="{{ site.baseurl }}js/lib/angular.min.js"></script>
