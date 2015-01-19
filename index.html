@@ -69,8 +69,16 @@
         class="container explode"
         ng-hide="is_loading"
       ></article>
-      <div class="help help-tap"></div>
-      <div class="help help-swipe"></div>
+      <div
+          class="help help-tap"
+          ng-if="is_tap_help_required"
+          on-animation-end="menagerie_ctrl.done_tap_help()"
+      ></div>
+      <div
+          class="help help-swipe"
+          ng-if="is_swipe_help_required"
+          on-animation-end="menagerie_ctrl.done_swipe_help()"
+      ></div>
     </div>
 
     <script src="{{ site.baseurl }}js/lib/angular.min.js"></script>

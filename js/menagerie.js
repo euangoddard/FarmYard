@@ -45,7 +45,7 @@
         ImagePreloaderProvider.set_images_root(images_root);
     });
 
-    app.controller('MenagerieCtrl', function ($scope, $q, SoundManager, ImagePreloader) {
+    app.controller('MenagerieCtrl', function ($scope, $q, $timeout, SoundManager, ImagePreloader) {
         var sound_loading_promise = SoundManager.add_sounds(ANIMALS);
         var image_loading_promise = ImagePreloader.load_images(ANIMALS, 'svg');
         $q.all([sound_loading_promise, image_loading_promise]).then(function () {
@@ -103,7 +103,25 @@
             doc_element.off('keydown');
         });
 
+
+        // Helpers
+        var tap_help_timeout = $timeout(function () {
+            $scope.is_tap_help_required = true;
+        }, 500);
+
+
         this.move(0, 0);
+
+        this.done_tap_help = function () {
+            $scope.is_tap_help_required = false;
+            $timeout(function () {
+                $scope.is_swipe_help_required = true;
+            }, 500);
+        };
+        this.done_swipe_help = function () {
+            console.log('done swipe help');
+            
+        };
     });
 
     app.directive('animal', function () {
@@ -132,6 +150,22 @@
             },
             controllerAs: 'animal_ctrl'
         };
+    });
+
+    app.directive('onAnimationEnd', function () {
+        return {
+            restrict: 'A',
+            scope: {
+                onAnimationEnd: '&'
+            },
+            link: function (scope, element, attrs) {
+                element.on('webkitAnimationEnd animationend', function (event) {
+                    scope.$apply(function () {
+                        scope.onAnimationEnd(event);
+                    });
+                });
+            }
+        }
     });
 
     app.factory('vibration', function () {
