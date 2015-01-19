@@ -1,0 +1,16 @@
+---
+---
+CACHE MANIFEST
+# {{ 'now' | date: "%Y" }}
+
+CACHE:
+{{ site.baseurl }}sounds/
+{{ site.baseurl }}img/
+{{ site.baseurl }}js/
+{{ site.baseurl }}css/
+{{ site.baseurl }}partials/
+{{ site.baseurl }}index.html
+http://fonts.googleapis.com/css?family=Shojumaru
+
+NETWORK:
+*
