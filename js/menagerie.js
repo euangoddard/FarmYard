@@ -37,7 +37,9 @@
     };
 
     var app = angular.module('Menagerie', ['ngAnimate', 'hmTouchEvents']);
-    app.config(function (SoundManagerProvider, ImagePreloaderProvider) {
+    app.config(function ($compileProvider, SoundManagerProvider, ImagePreloaderProvider) {
+        $compileProvider.debugInfoEnabled(false);
+        
         var sounds_root = get_config_value('sounds-root');
         SoundManagerProvider.set_sounds_root(sounds_root);
 
