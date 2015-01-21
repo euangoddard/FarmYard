@@ -36,7 +36,7 @@
         40: [0, 1] // down
     };
 
-    var app = angular.module('Menagerie', ['ngAnimate', 'hmTouchEvents']);
+    var app = angular.module('Menagerie', ['ngAnimate', 'ngTouch', 'hmTouchEvents']);
     app.config(function ($compileProvider, SoundManagerProvider, ImagePreloaderProvider) {
         $compileProvider.debugInfoEnabled(false);
         
