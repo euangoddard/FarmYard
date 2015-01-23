@@ -43,50 +43,47 @@
     data-sounds-root="{{ site.baseurl }}sounds/"
     data-partials-root="{{ site.baseurl }}partials/"
     data-images-root="{{ site.baseurl }}img/"
+    ng-app="Menagerie"
+    ng-controller="MenagerieCtrl as menagerie_ctrl"
+    hm-swipeleft="menagerie_ctrl.move(-1, 0)"
+    hm-swiperight="menagerie_ctrl.move(1, 0)"
+    hm-swipeup="menagerie_ctrl.move(0, -1)"
+    hm-swipedown="menagerie_ctrl.move(0, 1)"
   >
-    <div
-      ng-app="Menagerie"
-      ng-controller="MenagerieCtrl as menagerie_ctrl"
-      hm-swipeleft="menagerie_ctrl.move(-1, 0)"
-      hm-swiperight="menagerie_ctrl.move(1, 0)"
-      hm-swipeup="menagerie_ctrl.move(0, -1)"
-      hm-swipedown="menagerie_ctrl.move(0, 1)"
-    >
-      <div class="container" ng-if="is_loading">
-        <div class="progress-circular">
-          <div class="spinner-wrapper">
-            <div class="inner">
-              <div class="gap"></div>
-              <div class="left">
-                <div class="half-circle"></div>
-              </div>
-              <div class="right">
-                <div class="half-circle"></div>
-              </div>
+    <div class="container" ng-if="is_loading">
+      <div class="progress-circular">
+        <div class="spinner-wrapper">
+          <div class="inner">
+            <div class="gap"></div>
+            <div class="left">
+              <div class="half-circle"></div>
+            </div>
+            <div class="right">
+              <div class="half-circle"></div>
             </div>
           </div>
         </div>
       </div>
-      <article
-        animal="animal"
-        ng-repeat="animal in animals"
-        ng-animate
-        class="container explode"
-        ng-hide="is_loading"
-      ></article>
-      <aside ng-controller="HelpCtrl as help_ctrl" ng-cloak>
-        <div
-            class="help help-tap"
-            ng-if="is_help_required.tap"
-            on-animation-end="help_ctrl.end_help('tap')"
-        ></div>
-        <div
-            class="help help-swipe"
-            ng-if="is_help_required.swipe"
-            on-animation-end="help_ctrl.end_help('swipe')"
-        ></div>
-      </aside>
     </div>
+    <article
+      animal="animal"
+      ng-repeat="animal in animals"
+      ng-animate
+      class="container explode"
+      ng-hide="is_loading"
+    ></article>
+    <aside ng-controller="HelpCtrl as help_ctrl" ng-cloak>
+      <div
+          class="help help-tap"
+          ng-if="is_help_required.tap"
+          on-animation-end="help_ctrl.end_help('tap')"
+      ></div>
+      <div
+          class="help help-swipe"
+          ng-if="is_help_required.swipe"
+          on-animation-end="help_ctrl.end_help('swipe')"
+      ></div>
+    </aside>
 
     <script src="{{ site.baseurl }}js/lib/angular.min.js"></script>
     <script src="{{ site.baseurl }}js/lib/angular-animate.min.js"></script>
