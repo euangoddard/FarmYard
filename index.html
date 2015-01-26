@@ -45,10 +45,8 @@
     data-images-root="{{ site.baseurl }}img/"
     ng-app="Menagerie"
     ng-controller="MenagerieCtrl as menagerie_ctrl"
-    hm-swipeleft="menagerie_ctrl.move(-1, 0)"
-    hm-swiperight="menagerie_ctrl.move(1, 0)"
-    hm-swipeup="menagerie_ctrl.move(0, -1)"
-    hm-swipedown="menagerie_ctrl.move(0, 1)"
+    ng-swipe-left="menagerie_ctrl.move(-1)"
+    ng-swipe-right="menagerie_ctrl.move(1)"
   >
     <div class="container" ng-if="is_loading">
       <div class="progress-circular">
@@ -88,8 +86,6 @@
     <script src="{{ site.baseurl }}js/lib/angular.min.js"></script>
     <script src="{{ site.baseurl }}js/lib/angular-animate.min.js"></script>
     <script src="{{ site.baseurl }}js/lib/angular-touch.min.js"></script>
-    <script src="{{ site.baseurl }}js/lib/hammer.js"></script>
-    <script src="{{ site.baseurl }}js/lib/angular.hammer.min.js"></script>
     <script src="{{ site.baseurl }}js/lib/modernizr.audio.js"></script>
     <script src="{{ site.baseurl }}js/lib/lodash.js"></script>
     <script src="{{ site.baseurl }}js/menagerie.js"></script>

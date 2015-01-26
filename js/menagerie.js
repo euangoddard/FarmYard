@@ -30,13 +30,11 @@
     var ANIMALS = _.keys(SOUNDS_BY_ANIMAL);
 
     var DELTAS_BY_KEYCODE = {
-        37: [-1, 0], // left
-        38: [0, -1], // up
-        39: [1, 0], // right
-        40: [0, 1] // down
+        37: -1, // left
+        39: 1 // right
     };
 
-    var app = angular.module('Menagerie', ['ngAnimate', 'ngTouch', 'hmTouchEvents']);
+    var app = angular.module('Menagerie', ['ngAnimate', 'ngTouch']);
     app.config(function ($compileProvider, SoundManagerProvider, ImagePreloaderProvider) {
         $compileProvider.debugInfoEnabled(false);
         
@@ -57,35 +55,27 @@
 
         var SCENE_CACHE = {};
 
-        $scope.position = {x: 0, y: 0};
+        $scope.position = 0;
         $scope.animals = [];
 
-        this.move = function (dx, dy) {
-            $scope.position.x += dx;
-            $scope.position.y += dy;
-            var cache_key = get_cache_key($scope.position.x, $scope.position.y);
-            var animal = SCENE_CACHE[cache_key];
+        this.move = function (dx) {
+            $scope.position += dx;
+            var position = $scope.position;
+            var animal = SCENE_CACHE[position];
             if (typeof animal === 'undefined') {
-                var candidate_animals = get_candidate_animals(
-                    $scope.position.x,
-                    $scope.position.y
-                );
-                SCENE_CACHE[cache_key] = animal = _.sample(candidate_animals);
+                var candidate_animals = get_candidate_animals(position);
+                SCENE_CACHE[position] = animal = _.sample(candidate_animals);
             }
             $scope.animals.splice(0, 1, animal);
             HelpQueue.purge('swipe').purge('tap');
         };
 
-        var get_cache_key = function (x, y) {
-            return [x.toString(), y.toString()].join(',');
-        };
-
-        var get_candidate_animals = function (x, y) {
+        var get_candidate_animals = function (x) {
             var neighbouring_animals = [
-                SCENE_CACHE[get_cache_key(x - 1, y)],
-                SCENE_CACHE[get_cache_key(x + 1, y)],
-                SCENE_CACHE[get_cache_key(x, y - 1)],
-                SCENE_CACHE[get_cache_key(x, y + 1)],
+                SCENE_CACHE[x - 1],
+                SCENE_CACHE[x - 2],
+                SCENE_CACHE[x + 1],
+                SCENE_CACHE[x + 2]
             ];
             var candidate_animals = _.difference(ANIMALS, neighbouring_animals);
             return candidate_animals;
@@ -97,7 +87,7 @@
             var delta = DELTAS_BY_KEYCODE[event.keyCode];
             if (delta) {
                 $scope.$apply(function () {
-                    ctrl.move.apply(ctrl, delta);
+                    ctrl.move(delta);
                 });
             }
 
@@ -106,7 +96,7 @@
             doc_element.off('keydown');
         });
 
-        this.move(0, 0);
+        this.move(0);
         HelpQueue.add('swipe', 15000);
         
     });
