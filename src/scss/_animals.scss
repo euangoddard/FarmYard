@@ -27,13 +27,13 @@ $animal-names: cat chicken cockerel cow dog donkey elephant fox horse leopard li
     }
 }
 
-@include keyframes(sound-shake) {
+@keyframes sound-shake {
     0%, 100% {
-        @include transform(rotateZ(-10deg));
+        transform: rotateZ(-10deg);
     }
 
     50% {
-        @include transform(rotateZ(10deg) scale(1.5));
+        transform: rotateZ(10deg) scale(1.5);
     }
 }
 
@@ -42,12 +42,12 @@ $animal-names: cat chicken cockerel cow dog donkey elephant fox horse leopard li
     font-size: 8vw;
     text-align: center;
 
-    @include transform-origin(50%);
-    @include animation(sound-shake, 1.0s, forwards infinite);
+    transform-origin: 50%;
+    animation: sound-shake 1.0s ease infinite;
 
     &.ng-hide-add.ng-hide-add-active,
     &.ng-hide-remove.ng-hide-remove-active {
-        @include transition(opacity, 0.5s, ease-in-out);
+        transition: opacity 0.5s ease-in-out;
     }
 
     &.ng-hide {

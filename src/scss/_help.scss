@@ -1,49 +1,49 @@
 @import "utils";
 
-@include keyframes(tap) {
+@keyframes tap {
     0% {
-        @include transform(scale(2) translateY(200%));
+        transform: scale(2) translateY(200%);
         opacity: 0;
     }
     45% {
-        opacity: 1;   
+        opacity: 1;
     }
     50% {
-        @include transform(scale(1) translateY(0));
+        transform: scale(1) translateY(0);
     }
     100% {
-        @include transform(scale(1));
+        transform: scale(1);
         opacity: 0;
     }
     60% {
-        @include transform(scale(0.8));
+        transform: scale(0.8);
     }
     70% {
-        @include transform(scale(1.2));
+        transform: scale(1.2);
     }
 }
 
-@include keyframes(swipe) {
+@keyframes swipe {
     0% {
-        @include transform(scale(2));
+        transform: scale(2);
         opacity: 0;
     }
     50% {
-        @include transform(scale(1) rotate(0));
-        opacity: 1;   
+        transform: scale(1) rotate(0);
+        opacity: 1;
     }
     100% {
-        @include transform(translateX(200%));
+        transform: translateX(200%);
     }
 }
 
 .help {
     position: absolute;
-    
+
     height: 50vh;
     width: 25vw;
     top: 25vh;
-    
+
     background-repeat: no-repeat;
     background-position: center center;
     background-size: contain;
@@ -52,14 +52,14 @@
         z-index: 3;
         left: 12.5vw;
         background-image: url(../img/help/tap.svg);
-        @include animation(tap, 2.0s, forwards);
+        animation: tap 2.0s;
     }
 
     &.help-swipe {
         z-index: 4;
         left: 62.5vw;
         background-image: url(../img/help/swipe.svg);
-        @include animation(swipe, 2.0s, forwards);
+        animation: swipe 2.0s;
     }
 }
 

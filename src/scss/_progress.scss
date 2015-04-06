@@ -1,58 +1,56 @@
-@import "utils";
-
 $progress-circular-ease-in-out: cubic-bezier(0.35, 0, 0.25, 1);
 $progress-circular-duration: 5.25s;
 $progress-circular-circle-duration: $progress-circular-duration * 0.25;
 $progress-circular-outer-duration: $progress-circular-duration * (5 / 9);
 $progress-circular-sporadic-duration: $progress-circular-duration;
-$progress-circular-size: 100px;
+$progress-circular-size: 50px;
 $progress-circular-colour: #B6382F;
 
-@include keyframes(outer-rotate) {
+@keyframes outer-rotate {
 	100% {
-        @include transform(rotate(360deg));
+        transform: rotate(360deg);
     }
 }
-@include keyframes (left-wobble) {
+@keyframes left-wobble {
 	0%, 100% {
-        @include transform(rotate(130deg));
+        transform: rotate(130deg);
     }
 	50% {
-        @include transform(rotate(-5deg));
+        transform: rotate(-5deg);
     }
 }
-@include keyframes (right-wobble) {
+@keyframes right-wobble {
 	0%, 100% {
-        @include transform(rotate(-130deg));
+        transform: rotate(-130deg);
     }
 	50% {
-        @include transform(rotate(5deg));
+        transform: rotate(5deg);
     }
 }
-@include keyframes (sporadic-rotate) {
+@keyframes sporadic-rotate {
 	12.5% {
-        @include transform(rotate(135deg));
+        transform: rotate(135deg);
     }
 	25% {
-        @include transform(rotate(270deg));
+        transform: rotate(270deg);
     }
 	37.5% {
-        @include transform(rotate(405deg));
+        transform: rotate(405deg);
     }
 	50% {
-        @include transform(rotate(540deg));
+        transform: rotate(540deg);
     }
 	62.5% {
-        @include transform(rotate(675deg));
+        transform: rotate(675deg);
     }
 	75% {
-        @include transform(rotate(810deg));
+        transform: rotate(810deg);
     }
 	87.5% {
-        @include transform(rotate(945deg));
+        transform: rotate(945deg);
     }
 	100% {
-        @include transform(rotate(1080deg));
+        transform: rotate(1080deg);
     }
 }
 
@@ -64,7 +62,7 @@ $progress-circular-colour: #B6382F;
 	padding-top: 0 !important;
 	margin-bottom: 0 !important;
 	overflow: hidden;
-	
+
 	.inner {
 		width: $progress-circular-size;
 		height: $progress-circular-size;
@@ -113,17 +111,17 @@ $progress-circular-colour: #B6382F;
 	}
 
 	.spinner-wrapper {
-		@include animation(outer-rotate, $progress-circular-outer-duration, linear infinite);
+		animation: outer-rotate $progress-circular-outer-duration linear infinite;
 		.inner {
-			@include animation(sporadic-rotate, $progress-circular-sporadic-duration, $progress-circular-ease-in-out infinite);
+			animation: sporadic-rotate $progress-circular-sporadic-duration $progress-circular-ease-in-out infinite;
 			.left {
 				.half-circle {
-                    @include animation(left-wobble, ($progress-circular-duration * 0.25), $progress-circular-ease-in-out infinite);
+					animation: left-wobble ($progress-circular-duration * 0.25) $progress-circular-ease-in-out infinite;
 				}
 			}
 			.right {
 				.half-circle {
-                    @include animation(right-wobble, ($progress-circular-duration * 0.25), $progress-circular-ease-in-out infinite);
+                    animation: right-wobble ($progress-circular-duration * 0.25) $progress-circular-ease-in-out infinite;
 				}
 			}
 		}
