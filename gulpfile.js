@@ -70,8 +70,8 @@ gulp.task('favicons', ['build-html'], function (done) {
     },
     settings: {
       background: '#cccccc',
-      appName: 'Vehicles',
-      appDescription: 'Vehicle recognition game for kids',
+      appName: 'Menagerie',
+      appDescription: 'An animal sounds game for young children',
       developer: 'Euan Goddard',
       index: 'index.html',
       url: 'https://menagerie.euans.space'
