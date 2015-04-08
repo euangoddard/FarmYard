@@ -127,7 +127,7 @@ gulp.task('constants', function (done) {
   }
   catch (e) {}
 
-  var sass = '$image-names: ' + image_names.join(', ') + ';';
+  var sass = '$animal-names: ' + image_names.join(', ') + ';';
   fs.writeFileSync(path.join(tmp_dir, '_constants.scss'), sass);
 
   var js = 'angular.module("menagerie.constants", []).constant("ANIMALS", ' + JSON.stringify(image_names) + ');';

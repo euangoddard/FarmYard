@@ -1,3 +1,4 @@
+@import "constants";
 @import "utils";
 
 .animal {
@@ -19,11 +20,9 @@
 }
 
 
-$animal-names: cat chicken cockerel cow dog donkey elephant fox horse leopard lion lioness monkey orangutan owl panda penguin pig puma reindeer sheep tiger zebra;
 @each $animal-name in $animal-names {
     .animal-#{$animal-name} {
-        background-image: url("../img/#{$animal-name}.svg");
-
+        background-image: image-url("#{$animal-name}.svg");
     }
 }
 
