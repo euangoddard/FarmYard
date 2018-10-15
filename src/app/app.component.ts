@@ -1,10 +1,11 @@
-import { Component } from '@angular/core';
+import { ANIMALS } from './animals';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 
 @Component({
   selector: 'men-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AppComponent {
-  title = 'menagerie';
+  readonly animals = ANIMALS;
 }
